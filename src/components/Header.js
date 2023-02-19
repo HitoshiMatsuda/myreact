@@ -5,6 +5,8 @@ import { signInWithGoogle, signOutGoogle } from "../service/firebase";
 // "npm install object-dig"でインストール済み
 import dig from 'object-dig';
 
+// 本Classはアプリ内で使用するHeaderのコンポーネントを定義するものである。
+
 const Header = () => {
     const currentUser = useContext(AuthContext);
     console.log(currentUser);
