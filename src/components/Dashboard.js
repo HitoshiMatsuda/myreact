@@ -6,7 +6,30 @@ import dig from 'object-dig';
 import * as Api from '../service/api';
 import List from './List';
 
+// materialUI
+import { makeStyles } from '@material-ui/core/styles';
+import { TextField } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
+const useStyles = makeStyles(() => ({
+    root: {
+        textAlign: 'center',
+        marginTop: 40,
+        justifyContent: 'space-between'
+    },
+    form: {
+        width: '100%',
+        maxWidth: 360,
+        margin: 'auto',
+        marginBottom: 40,
+        display: 'flex',
+        alignItems: 'baseLine',
+        justifyContent: 'center'
+    },
+    margining: {
+        marginRight: 10
+    }
+}));
 
 // 本Classはアプリ内で使用するDashBoardのコンポーネントを定義するものである。
 const Dashboard = () => {
@@ -16,6 +39,9 @@ const Dashboard = () => {
     console.log(currentUser);
     console.log(inputName);
     console.log(getData);
+
+    // materialUI
+    const classes = useStyles();
 
     // データ取得
     useEffect(() => { fetch(); }, [currentUser]);
@@ -31,10 +57,10 @@ const Dashboard = () => {
     const formDiv = () => {
         let formElements
         if (dig(currentUser, 'currentUser')) {
-            formElements = <form>
+            formElements = <form className={classes.form}>
                 {/* event:何かイベントが発生した際の情報を保持するObject */}
-                < input placeholder='ToDoName' value={inputName} onChange={(event) => setInputName(event.currentTarget.value)} />
-                <button type='button' onClick={() => apiPost()}>追加</button>
+                < TextField className={classes.margining} placeholder='ToDoName' value={inputName} onChange={(event) => setInputName(event.currentTarget.value)} />
+                <Button type='button' color='primary' disabled={inputName.length > 0 ? false : true} onClick={() => apiPost()}>追加</Button>
             </form>
         } else {
             formElements = <button onClick={signInWithGoogle}>ログイン</button>
@@ -51,7 +77,7 @@ const Dashboard = () => {
     }
 
     return (
-        <div>
+        <div className={classes.root}>
             ダッシュボードコンポーネント
             {formDiv()}
             <List getData={getData} fetch={fetch} />

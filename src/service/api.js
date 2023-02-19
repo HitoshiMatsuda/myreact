@@ -18,7 +18,7 @@ export const getData = async (uid) => {
                 // key名はカラム名と一致しなくても良い
                 userId: doc.id,
                 content: doc.data().content,
-                completeFlg: doc.data().completeFlg
+                conpleteFlg: doc.data().conpleteFlg
             });
         });
         return datas;
@@ -45,4 +45,14 @@ export const postData = (content, uid) => {
 
 export const deleteData = (id) => {
     db.collection('myreactDB').doc(id).delete();
+}
+
+export const updateData = async (userId) => {
+    console.log(userId);
+    const data = await db.collection("myreactDB").doc(userId).get();
+    console.log(data.userId);
+    return db.collection('myreactDB').doc(userId).update({
+        conpleteFlg: data.data().conpleteFlg ? false : true,
+        // createdDateTime: firebase.firestore.FieldValue.serverTimestamp(),
+    });
 }
