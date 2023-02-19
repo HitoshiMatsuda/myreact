@@ -4,6 +4,9 @@ import { signInWithGoogle } from '../service/firebase';
 import dig from 'object-dig';
 // api.jsでexportされている全てのメソッドをimportする
 import * as Api from '../service/api';
+import List from './List';
+
+
 
 // 本Classはアプリ内で使用するDashBoardのコンポーネントを定義するものである。
 const Dashboard = () => {
@@ -39,16 +42,19 @@ const Dashboard = () => {
         return formElements
     }
 
-    const apiPost = () => {
-        Api.postData(inputName, currentUser.currentUser.uid);
+    const apiPost = async () => {
+        await Api.postData(inputName, currentUser.currentUser.uid);
         // 入力欄をデータ送信後に空にする
-        setInputName('');
+        await setInputName('');
+        // 最新のデータを取得
+        fetch();
     }
 
     return (
         <div>
             ダッシュボードコンポーネント
             {formDiv()}
+            <List getData={getData} fetch={fetch} />
         </div>
     )
 };

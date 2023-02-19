@@ -42,3 +42,7 @@ export const postData = (content, uid) => {
             console.error("Error adding document: ", error);
         });
 }
+
+export const deleteData = (id) => {
+    db.collection('myreactDB').doc(id).delete();
+}
